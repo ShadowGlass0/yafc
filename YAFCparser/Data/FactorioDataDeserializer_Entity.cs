@@ -151,6 +151,8 @@ namespace YAFC.Parser
                     {
                         container.logisticMode = table.Get("logistic_mode", "");
                         container.logisticSlotsCount = table.Get("logistic_slots_count", 0);
+                        if (container.logisticSlotsCount == 0)
+                            container.logisticSlotsCount = table.Get("max_logistic_slots", 1000);
                     }
                     break;
             }
@@ -372,6 +374,10 @@ namespace YAFC.Parser
                         recipeCrafters.Add(entity, SpecialNames.GeneratorRecipe);
                         entity.craftingSpeed = ParseEnergy(interfaceProduction);
                     }
+                    break;
+                case "constant-combinator":
+                    if (name == "constant-combinator")
+                        Database.constantCombinatorCapacity = table.Get("item_slot_count", 18);
                     break;
                 case "accumulator":
                     if (energySource != null && energySource.Get("buffer_capacity", out string capacity))
